@@ -55,7 +55,6 @@ export class AuthService {
     return userData;
   }
 
-  // TODO: Avoid register if email already exists
   async register(registerDto: CreateUserDto) {
     const user = await this.usersService.findOneByEmail(registerDto.email);
     if (user) {

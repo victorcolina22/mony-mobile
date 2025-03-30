@@ -6,6 +6,7 @@
 
 - id (PK)
 - email
+- name
 - password
 - username
 - created_at, updated_at

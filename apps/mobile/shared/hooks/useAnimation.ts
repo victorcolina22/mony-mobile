@@ -13,6 +13,8 @@ export const useAnimations = () => {
   const textAnimatedOpacity = useSharedValue(0);
   const buttonsAnimatedOpacity = useSharedValue(0);
 
+  const animatedOpacity = useSharedValue(0);
+
   const marginAnimatedDefault = useAnimatedStyle(() => ({
     marginTop: marginAnimated.value,
   }));
@@ -24,6 +26,9 @@ export const useAnimations = () => {
   }));
   const buttonsAnimatedOpacityDefault = useAnimatedStyle(() => ({
     opacity: buttonsAnimatedOpacity.value,
+  }));
+  const animatedOpacityDefault = useAnimatedStyle(() => ({
+    opacity: animatedOpacity.value,
   }));
 
   useEffect(() => {
@@ -55,12 +60,25 @@ export const useAnimations = () => {
         easing: Easing.inOut(Easing.ease),
       })
     );
+
+    handleAnimatedOpacity();
   }, []);
+
+  const handleAnimatedOpacity = () => {
+    animatedOpacity.value = withDelay(
+      1300,
+      withTiming(1, {
+        duration: 1000,
+        easing: Easing.inOut(Easing.ease),
+      })
+    );
+  };
 
   return {
     marginAnimatedDefault,
     imageAnimatedOpacityDefault,
     textAnimatedOpacityDefault,
     buttonsAnimatedOpacityDefault,
+    animatedOpacityDefault,
   };
 };

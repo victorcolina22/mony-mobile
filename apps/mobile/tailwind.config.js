@@ -15,6 +15,7 @@ module.exports = {
         'mony-gray': '#3A3937',
         'mony-white': '#F6F5F8',
         'mony-light-gray': '#ECECEE',
+        'mony-red': '#900B09',
       },
     },
   },

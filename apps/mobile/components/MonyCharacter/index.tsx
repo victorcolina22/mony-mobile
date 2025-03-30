@@ -1,27 +1,38 @@
 import { View, ViewProps } from 'react-native';
+import Animated from 'react-native-reanimated';
 
 import { EyeCloseIcon } from '../icons/EyeClose';
 import { SmileIcon } from '../icons/SmileIcon';
+import { useAnimations } from '@/shared/hooks/useAnimation';
 
 interface MonyCharacterProps {
   children: React.ReactNode;
   className?: string;
 }
+
 export function MonyCharacter({
   children,
   className,
   ...rest
 }: MonyCharacterProps & ViewProps) {
+  const { animatedOpacityDefault } = useAnimations();
+
   return (
     <View className={`flex-1 bg-mony-purple relative ${className}`} {...rest}>
       <View className="absolute -top-40 left-1/2 -translate-x-1/2 bg-mony-purple rounded-full w-[600] h-[600]" />
-      <View className="flex-row items-center justify-center gap-16 -mt-10">
+      <Animated.View
+        className="flex-row items-center justify-center gap-16 -mt-10"
+        style={animatedOpacityDefault}
+      >
         <EyeCloseIcon />
         <EyeCloseIcon />
-      </View>
-      <View className="flex-row justify-center mt-4">
+      </Animated.View>
+      <Animated.View
+        className="flex-row justify-center mt-4"
+        style={animatedOpacityDefault}
+      >
         <SmileIcon />
-      </View>
+      </Animated.View>
       <View className="mt-32">{children}</View>
     </View>
   );

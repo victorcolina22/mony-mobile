@@ -35,7 +35,7 @@ export default function App() {
       <Animated.View className="flex-1" style={marginAnimatedDefault}>
         <MonyCharacter>
           <Animated.View
-            className="gap-5 h-full"
+            className="gap-5 h-full w-full"
             style={textAnimatedOpacityDefault}
           >
             <Text className="text-white text-center text-5xl font-bold">
@@ -47,16 +47,18 @@ export default function App() {
           </Animated.View>
 
           <Animated.View
-            className="px-10 gap-5 absolute left-1/2 -translate-x-1/2 bottom-44"
+            className="px-10 gap-5 absolute bottom-44 w-full"
             style={buttonsAnimatedOpacityDefault}
           >
-            <TouchableOpacity className="bg-mony-gray py-4 rounded-lg w-[310]">
-              <Text className="text-center text-mony-white text-xl">
-                Crear una cuenta
-              </Text>
-            </TouchableOpacity>
+            <Link asChild href="/(auth)/register">
+              <TouchableOpacity className="bg-mony-gray py-4 rounded-lg">
+                <Text className="text-center text-mony-white text-xl">
+                  Crear una cuenta
+                </Text>
+              </TouchableOpacity>
+            </Link>
             <Link asChild href="/(auth)/login">
-              <TouchableOpacity className="bg-mony-white py-4 rounded-lg w-[310]">
+              <TouchableOpacity className="bg-mony-white py-4 rounded-lg">
                 <Text className="text-center text-xl">Iniciar sesión</Text>
               </TouchableOpacity>
             </Link>

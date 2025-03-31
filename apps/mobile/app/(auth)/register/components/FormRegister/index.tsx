@@ -1,41 +1,26 @@
 import { useCallback, useState } from 'react';
 import { Text, View } from 'react-native';
 import { Link } from 'expo-router';
-import * as yup from 'yup';
 
 // Components
 import { Form } from '@/components/Form';
+import { RenderIf } from '@/components/RenderIf';
 
 // Services
 import { AuthService } from '@/api/services/auth-service';
 
-// Constants
-import { REGEX_EMAIL, REGEX_REGISTER_PASSWORD } from '@/constants/validation';
+// Schema
+import { schema } from './schema';
 
 // TODO: Enhance validations and validation messages (figma)
-
-const schema = yup.object({
-  name: yup
-    .string()
-    .required('Ups! ¿Olvidaste escribir tu nombre? ✍️')
-    .min(2, '¡Muy corto! Usa al menos 2 letras. 🤏'),
-  email: yup
-    .string()
-    .email('Ese correo no parece válido. ¿Lo revisas 👀?')
-    .required('Necesitamos tu correo para continuar 👀')
-    .matches(REGEX_EMAIL, 'Ese correo no parece válido. ¿Lo revisas 👀?'),
-  password: yup
-    .string()
-    .required('No puedes dejar este campo vacío 🔒')
-    .min(8, 'Muy corta 😬. Usa al menos 8 caracteres')
-    .matches(
-      REGEX_REGISTER_PASSWORD,
-      '¡Hazla más fuerte! 💪 Agrega una mayúscula, un número y un símbolo'
-    ),
-});
+// TODO: Handle errors like email already exists or with the server
 
 export function FormRegister() {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState({
+    show: false,
+    message: '',
+  });
 
   const defaultValues = {
     name: '',
@@ -52,12 +37,23 @@ export function FormRegister() {
     try {
       const response = await AuthService.register(data);
       console.log(response);
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      setError({
+        show: true,
+        message: error.response.data.message,
+      });
     } finally {
       setLoading(false);
     }
   }, []);
+
+  const handleOnChange = () => {
+    if (error.message === '') return;
+    setError({
+      show: false,
+      message: '',
+    });
+  };
 
   return (
     <Form schema={schema} defaultValues={defaultValues}>
@@ -82,14 +78,20 @@ export function FormRegister() {
             placeholder="Correo electrónico"
             spellCheck={false}
             textContentType="oneTimeCode"
+            onPress={handleOnChange}
           />
           <Form.Input
             name="password"
             placeholder="Contraseña"
             type="password"
             textContentType="oneTimeCode"
+            onPress={handleOnChange}
           />
         </View>
+
+        <RenderIf isTrue={error.show}>
+          <Text className="text-mony-red">{error.message}</Text>
+        </RenderIf>
 
         <View className="gap-6 absolute bottom-20 w-full">
           <Form.ButtonSubmit

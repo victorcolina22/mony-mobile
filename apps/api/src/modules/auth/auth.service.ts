@@ -23,12 +23,14 @@ export class AuthService {
   async validateUser(email: string, password: string) {
     const user = await this.usersService.findOneByEmail(email);
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException(
+        'No existe una cuenta asociada a este correo'
+      );
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-      throw new BadRequestException('Invalid password');
+      throw new BadRequestException('Contraseña incorrecta');
     }
 
     const { password: userPassword, ...userWithoutPassword } = user;
@@ -58,8 +60,10 @@ export class AuthService {
   async register(registerDto: CreateUserDto) {
     const user = await this.usersService.findOneByEmail(registerDto.email);
     if (user) {
-      throw new BadRequestException('Email already exists');
+      throw new BadRequestException('Este correo ya está registrado');
     }
+
+    registerDto.email = registerDto.email.toLowerCase();
 
     const registerUserData = {
       ...registerDto,
@@ -67,6 +71,21 @@ export class AuthService {
     };
 
     const newUser = await this.usersService.create(registerUserData);
-    return newUser;
+
+    const payload = {
+      userId: newUser.id,
+      email: newUser.email,
+      name: newUser.name,
+    };
+    const access_token = this.jwtService.sign(payload);
+
+    const userData = {
+      id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
+      access_token,
+    };
+
+    return userData;
   }
 }

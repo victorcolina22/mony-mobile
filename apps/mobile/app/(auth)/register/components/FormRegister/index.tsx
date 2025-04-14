@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import { Text, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Link } from 'expo-router';
 
 // Components
@@ -10,10 +11,7 @@ import { RenderIf } from '@/components/RenderIf';
 import { AuthService } from '@/api/services/auth-service';
 
 // Schema
-import { schema } from './schema';
-
-// TODO: Enhance validations and validation messages (figma)
-// TODO: Handle errors like email already exists or with the server
+import { defaultValues, schema } from './schema';
 
 export function FormRegister() {
   const [loading, setLoading] = useState(false);
@@ -21,12 +19,6 @@ export function FormRegister() {
     show: false,
     message: '',
   });
-
-  const defaultValues = {
-    name: '',
-    email: '',
-    password: '',
-  };
 
   const handleSubmit = (data: any) => {
     setLoading(true);
@@ -56,63 +48,71 @@ export function FormRegister() {
   };
 
   return (
-    <Form schema={schema} defaultValues={defaultValues}>
-      <View className="gap-8 flex-1 justify-center items-center w-full">
-        <View className="bg-mony-light-gray w-48 h-48 rounded-full -mt-36 mb-5" />
+    <View className="flex-1">
+      <KeyboardAwareScrollView
+        contentContainerClassName="flex-1"
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+      >
+        <Form schema={schema} defaultValues={defaultValues}>
+          <View className="gap-8 flex-1 justify-center items-center w-full">
+            <View className="bg-mony-light-gray w-48 h-48 rounded-full -mt-36 mb-5" />
 
-        <View className="mb-5 items-center">
-          <Text className="text-5xl font-bold w-[400] text-center">
-            ¡Es tu turno de presentarte!
-          </Text>
-        </View>
+            <View className="mb-5 items-center">
+              <Text className="text-5xl font-bold w-[400] text-center">
+                ¡Es tu turno de presentarte!
+              </Text>
+            </View>
 
-        <View className="w-full gap-8">
-          <Form.Input
-            name="name"
-            placeholder="Nombre"
-            spellCheck={false}
-            textContentType="oneTimeCode"
-          />
-          <Form.Input
-            name="email"
-            placeholder="Correo electrónico"
-            spellCheck={false}
-            textContentType="oneTimeCode"
-            onPress={handleOnChange}
-          />
-          <Form.Input
-            name="password"
-            placeholder="Contraseña"
-            type="password"
-            textContentType="oneTimeCode"
-            onPress={handleOnChange}
-          />
-        </View>
+            <View className="w-full gap-8">
+              <Form.Input
+                name="name"
+                placeholder="Nombre"
+                spellCheck={false}
+                textContentType="oneTimeCode"
+              />
+              <Form.Input
+                name="email"
+                placeholder="Correo electrónico"
+                spellCheck={false}
+                textContentType="oneTimeCode"
+                onPress={handleOnChange}
+              />
+              <Form.Input
+                name="password"
+                placeholder="Contraseña"
+                type="password"
+                textContentType="oneTimeCode"
+                onPress={handleOnChange}
+              />
+            </View>
 
-        <RenderIf isTrue={error.show}>
-          <Text className="text-mony-red">{error.message}</Text>
-        </RenderIf>
+            <RenderIf isTrue={error.show}>
+              <Text className="text-mony-red">{error.message}</Text>
+            </RenderIf>
 
-        <View className="gap-6 absolute bottom-20 w-full">
-          <Form.ButtonSubmit
-            className="bg-mony-gray rounded-lg py-4 w-full"
-            loading={loading}
-            onSubmit={handleSubmit}
-          >
-            Crear una cuenta
-          </Form.ButtonSubmit>
+            <Form.Footer>
+              <Form.ButtonSubmit
+                className="bg-mony-gray rounded-lg py-4 w-full"
+                loading={loading}
+                onSubmit={handleSubmit}
+              >
+                Crear una cuenta
+              </Form.ButtonSubmit>
 
-          <View className="gap-2">
-            <Text className="text-center">
-              ¿Ya tienes una cuenta?{' '}
-              <Link asChild href="/(auth)/login" replace>
-                <Text className="underline">Inicia sesión</Text>
-              </Link>
-            </Text>
+              <View className="gap-2">
+                <Text className="text-center">
+                  ¿Ya tienes una cuenta?{' '}
+                  <Link asChild href="/(auth)/login" replace>
+                    <Text className="underline">Inicia sesión</Text>
+                  </Link>
+                </Text>
+              </View>
+            </Form.Footer>
           </View>
-        </View>
-      </View>
-    </Form>
+        </Form>
+      </KeyboardAwareScrollView>
+    </View>
   );
 }
 

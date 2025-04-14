@@ -1,10 +1,12 @@
 import apiService from './api-service';
 
+import { IUser } from '@/shared/interfaces/user';
+
 export class AuthService {
-  private static readonly baseURL = 'http://192.168.100.114:3000/auth';
+  private static readonly baseURL = `${process.env.EXPO_PUBLIC_BASE_URL}/auth`;
 
   static async login(loginRequest: { email: string; password: string }) {
-    return await apiService.post(`${this.baseURL}/login`, loginRequest);
+    return await apiService.post<IUser>(`${this.baseURL}/login`, loginRequest);
   }
 
   static async register(registerRequest: {

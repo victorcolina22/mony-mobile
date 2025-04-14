@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { Text, View } from 'react-native';
 import { Link } from 'expo-router';
 
@@ -10,32 +10,29 @@ import { RenderIf } from '@/components/RenderIf';
 import { AuthService } from '@/api/services/auth-service';
 
 // Schema
-import { schema } from './schema';
+import { defaultValues, schema } from './schema';
 
-// TODO: Enhance validations and validation messages (figma)
-// TODO: Handle errors like email already exists or password is wrong, or with the server
+// Store
+import { useAuthStore } from '@/store/useAuthStore';
 
 export function FormLogin() {
+  const { setUser } = useAuthStore();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
     show: false,
     message: '',
   });
 
-  const defaultValues = {
-    email: '',
-    password: '',
-  };
-
   const handleSubmit = (data: any) => {
     setLoading(true);
     login(data);
   };
 
-  const login = useCallback(async (data: any) => {
+  const login = async (data: any) => {
     try {
       const response = await AuthService.login(data);
-      console.log(response);
+      setUser(response);
     } catch (error: any) {
       setError({
         show: true,
@@ -44,7 +41,7 @@ export function FormLogin() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
   const handleOnChange = () => {
     if (error.message === '') return;
@@ -84,7 +81,7 @@ export function FormLogin() {
           <Text className="text-mony-red">{error.message}</Text>
         </RenderIf>
 
-        <View className="gap-6 absolute bottom-20 w-full">
+        <Form.Footer>
           <Form.ButtonSubmit
             className="bg-mony-gray rounded-lg py-4 w-full"
             loading={loading}
@@ -102,7 +99,7 @@ export function FormLogin() {
               </Link>
             </Text>
           </View>
-        </View>
+        </Form.Footer>
       </View>
     </Form>
   );

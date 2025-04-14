@@ -6,6 +6,7 @@ import { FormContext } from './context/context';
 
 // Components
 import { ButtonSubmit } from './ButtonSubmit';
+import { Footer } from './Footer';
 import { Input } from './Input';
 
 interface FormContextProps {
@@ -40,6 +41,7 @@ FormComponent.displayName = 'Form';
 export const Form = Object.assign(FormComponent, {
   Input,
   ButtonSubmit,
+  Footer,
 });
 
 export default Form;

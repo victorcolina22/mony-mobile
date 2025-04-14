@@ -3,7 +3,7 @@ import Animated from 'react-native-reanimated';
 
 import { EyeCloseIcon } from '../icons/EyeClose';
 import { SmileIcon } from '../icons/SmileIcon';
-import { useAnimations } from '@/shared/hooks/useAnimation';
+import { useAnimations } from '@/hooks/useAnimation';
 
 interface MonyCharacterProps {
   children: React.ReactNode;

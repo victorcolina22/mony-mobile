@@ -23,8 +23,8 @@ export class UsersService {
     return this.usersRepository.find();
   }
 
-  findOne(id: number) {
-    const user = this.usersRepository.findOne({
+  async findOne(id: number) {
+    const user = await this.usersRepository.findOne({
       select: ['id', 'name', 'email', 'password'],
       where: { id },
     });
@@ -34,10 +34,10 @@ export class UsersService {
     return user;
   }
 
-  findOneByEmail(email: string) {
-    const user = this.usersRepository.findOne({
+  async findOneByEmail(email: string) {
+    const user = await this.usersRepository.findOne({
       select: ['id', 'name', 'email', 'password'],
-      where: { email },
+      where: { email: email.toLowerCase() },
     });
     if (!user) {
       throw new NotFoundException(`User with email ${email} not found`);

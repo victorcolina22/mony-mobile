@@ -2,6 +2,12 @@ import * as yup from 'yup';
 
 import { REGEX_EMAIL, REGEX_REGISTER_PASSWORD } from '@/constants/validation';
 
+export const defaultValues = {
+  name: '',
+  email: '',
+  password: '',
+};
+
 export const schema = yup.object({
   name: yup
     .string()

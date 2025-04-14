@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { HEADERS, TIMEOUT } from '@/constants/config';
 
 const baseURL = '';
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL,
   timeout: TIMEOUT,
   headers: HEADERS,

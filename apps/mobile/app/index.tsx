@@ -8,7 +8,7 @@ import { Link } from 'expo-router';
 import { MonyCharacter } from '@/components/MonyCharacter';
 
 // Shared
-import { useAnimations } from '@/shared/hooks/useAnimation';
+import { useAnimations } from '@/hooks/useAnimation';
 
 export default function App() {
   const insets = useSafeAreaInsets();

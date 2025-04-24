@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableWithoutFeedback, View } from 'react-native';
 import { Link } from 'expo-router';
 
 // Components
@@ -80,6 +80,10 @@ export function FormLogin() {
         <RenderIf isTrue={error.show}>
           <Text className="text-mony-red">{error.message}</Text>
         </RenderIf>
+
+        <Link asChild href="/(home)">
+          <Text>Go to home</Text>
+        </Link>
 
         <Form.Footer>
           <Form.ButtonSubmit

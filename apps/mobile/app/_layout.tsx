@@ -33,11 +33,23 @@ export default function RootLayout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Stack>
+      <Stack
+      // screenOptions={{
+      //   headerShown: false,
+      //   animation: 'fade',
+      //   animationDuration: 400,
+      //   presentation: 'transparentModal',
+      // }}
+      >
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(home)" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="(firstTimeJourney)"
+          options={{ headerShown: false }}
+        />
       </Stack>
+
       <StatusBar style="auto" />
     </QueryClientProvider>
   );

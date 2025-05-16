@@ -91,12 +91,12 @@ export function FormRegister() {
               <Text className="text-mony-red">{error.message}</Text>
             </RenderIf>
 
+            <Link asChild href="/(firstTimeJourney)" replace>
+              <Text>Ir a flujo primera vez</Text>
+            </Link>
+
             <Form.Footer>
-              <Form.ButtonSubmit
-                className="bg-mony-gray rounded-lg py-4 w-full"
-                loading={loading}
-                onSubmit={handleSubmit}
-              >
+              <Form.ButtonSubmit loading={loading} onSubmit={handleSubmit}>
                 Crear una cuenta
               </Form.ButtonSubmit>
 

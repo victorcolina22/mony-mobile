@@ -5,9 +5,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { FormContext } from './context/context';
 
 // Components
-import { ButtonSubmit } from './ButtonSubmit';
-import { Footer } from './Footer';
-import { Input } from './Input';
+import { ButtonSubmit } from './components/ButtonSubmit';
+import { Footer } from './components/Footer';
+import { Input } from './components/Input';
 
 interface FormContextProps {
   children: React.ReactNode;

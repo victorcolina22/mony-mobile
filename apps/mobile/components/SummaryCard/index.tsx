@@ -13,6 +13,9 @@ import { SummaryValue } from './components/SummaryValue';
 // Types
 import { SummaryCardProps } from './types';
 
+// Utils
+import { cn } from '@/shared/utils';
+
 const SummaryCardComposition = ({
   children,
   className,
@@ -21,7 +24,10 @@ const SummaryCardComposition = ({
   return (
     <SummaryCardContext.Provider value={{ ...rest }}>
       <View
-        className={`border border-mony-gray py-5 px-10 rounded-lg ${className}`}
+        className={cn(
+          'border border-mony-gray py-5 px-10 rounded-lg',
+          className
+        )}
       >
         {children}
       </View>

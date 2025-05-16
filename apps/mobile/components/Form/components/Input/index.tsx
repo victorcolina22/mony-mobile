@@ -1,7 +1,7 @@
 import { Controller } from 'react-hook-form';
 import { Text, TextInput, TextInputProps, View } from 'react-native';
 
-import { useFormContext } from '../context/context';
+import { useFormContext } from '../../context/context';
 import { useState } from 'react';
 import { PasswordEyeIcon } from '@/components/icons/PasswordEyeIcon';
 import { PasswordEyeCloseIcon } from '@/components/icons/PasswordEyeCloseIcon';

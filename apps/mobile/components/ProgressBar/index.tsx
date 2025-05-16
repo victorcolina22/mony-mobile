@@ -4,12 +4,12 @@ import Animated, { useSharedValue, withSpring } from 'react-native-reanimated';
 // Context
 import { useSummaryCardContext } from '../SummaryCard/context/context';
 
-export function ProgressBar() {
+export function ProgressBar(): React.ReactElement {
   const { percentage } = useSummaryCardContext();
 
   const width = useSharedValue('0%');
   width.value = withSpring(`${percentage}`, {
-    damping: 50,
+    damping: 50, // Controls how quickly the animation settles
   });
 
   return (

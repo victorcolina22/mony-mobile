@@ -6,11 +6,9 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
-// DTOs
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
 
-// Services
 import { UsersService } from '../users/users.service';
 
 @Injectable()
@@ -64,6 +62,7 @@ export class AuthService {
     }
 
     registerDto.email = registerDto.email.toLowerCase();
+    registerDto.username = '';
 
     const registerUserData = {
       ...registerDto,

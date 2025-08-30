@@ -1,9 +1,10 @@
+import { CommonEntity } from 'src/common/entities';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({
-  name: 'USER',
+  name: 'USERS',
 })
-export class User {
+export class User extends CommonEntity {
   @PrimaryGeneratedColumn({
     name: 'id',
     type: 'int',
@@ -18,6 +19,14 @@ export class User {
     length: 50,
   })
   name: string;
+
+  @Column({
+    name: 'username',
+    type: 'varchar',
+    nullable: false,
+    length: 50,
+  })
+  username: string;
 
   @Column({
     name: 'email',

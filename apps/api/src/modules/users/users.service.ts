@@ -2,10 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-// Entities
 import { User } from './entities/user.entity';
 
-// DTOs
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -39,9 +37,6 @@ export class UsersService {
       select: ['id', 'name', 'email', 'password'],
       where: { email: email.toLowerCase() },
     });
-    if (!user) {
-      throw new NotFoundException(`User with email ${email} not found`);
-    }
     return user;
   }
 

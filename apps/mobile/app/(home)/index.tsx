@@ -1,7 +1,6 @@
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-// Components
 import { SummaryCard } from '@/components/SummaryCard';
 
 export default function MainScreen() {

@@ -1,14 +1,14 @@
-import { useEffect } from 'react';
-
-import * as SplashScreen from 'expo-splash-screen';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import { useFonts } from 'expo-font';
-
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
 import 'react-native-reanimated';
 import '../global.css';
+
+import * as SplashScreen from 'expo-splash-screen';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
+import { useFonts } from 'expo-font';
+
+import { AuthProvider } from '@/shared/auth-context/AuthProvider';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -32,25 +32,20 @@ export default function RootLayout() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Stack
-      // screenOptions={{
-      //   headerShown: false,
-      //   animation: 'fade',
-      //   animationDuration: 400,
-      //   presentation: 'transparentModal',
-      // }}
-      >
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(home)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="(firstTimeJourney)"
-          options={{ headerShown: false }}
-        />
-      </Stack>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="(home)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="(firstTimeJourney)"
+            options={{ headerShown: false }}
+          />
+        </Stack>
 
-      <StatusBar style="auto" />
-    </QueryClientProvider>
+        <StatusBar style="auto" />
+      </QueryClientProvider>
+    </AuthProvider>
   );
 }

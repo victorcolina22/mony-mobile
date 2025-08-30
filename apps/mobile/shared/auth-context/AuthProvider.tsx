@@ -8,7 +8,7 @@ import { AuthContext } from './auth-context';
 import { useAuthStore } from '@/store/useAuthStore';
 
 // Services
-import { axiosInstance } from '@/api/services/api-service';
+import { axiosInstance } from '@/api/services/api-adapter';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();

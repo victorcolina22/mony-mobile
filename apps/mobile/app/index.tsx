@@ -4,10 +4,8 @@ import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Link } from 'expo-router';
 
-// Components
 import { MonyCharacter } from '@/components/MonyCharacter';
 
-// Shared
 import { useAnimations } from '@/hooks/useAnimation';
 
 export default function App() {

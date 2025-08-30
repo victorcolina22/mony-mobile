@@ -2,7 +2,6 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { Link } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-// Components
 import { Button } from '@/components/Button';
 
 export default function MainScreen() {

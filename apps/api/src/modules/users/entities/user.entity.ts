@@ -1,5 +1,12 @@
 import { CommonEntity } from 'src/common/entities';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Account } from 'src/modules/accounts/entities/account.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({
   name: 'USERS',
@@ -43,4 +50,11 @@ export class User extends CommonEntity {
     length: 250,
   })
   password: string;
+
+  @OneToMany(() => Account, account => account.id)
+  @JoinColumn({
+    name: 'account_id',
+    foreignKeyConstraintName: 'FK_USER_ACCOUNT',
+  })
+  account_id: number;
 }

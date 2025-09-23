@@ -5,7 +5,7 @@ import { Link, useRouter } from 'expo-router';
 import { Form } from '@/components/Form';
 import { RenderIf } from '@/components/RenderIf';
 
-import { AuthService } from '@/api/services/auth-service';
+import { AuthService } from '@/api/services/auth/auth-service';
 
 import { defaultValues, schema } from './schema';
 

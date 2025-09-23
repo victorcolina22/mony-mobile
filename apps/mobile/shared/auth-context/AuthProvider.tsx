@@ -28,7 +28,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (user.access_token) return;
+    if (user.access_token) return router.replace('/(home)');
     router.replace('/');
   }, [user]);
 

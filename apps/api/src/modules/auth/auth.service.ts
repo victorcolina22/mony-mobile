@@ -9,13 +9,15 @@ import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
 
+import { AccountsService } from '../accounts/accounts.service';
 import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly accountsService: AccountsService
   ) {}
 
   async validateUser(email: string, password: string) {
@@ -70,6 +72,14 @@ export class AuthService {
     };
 
     const newUser = await this.usersService.create(registerUserData);
+
+    await this.accountsService.create({
+      user_id: newUser.id,
+      name: newUser.name,
+      type: 'cash',
+      currency: 'CLP',
+      balance: 0,
+    });
 
     const payload = {
       userId: newUser.id,

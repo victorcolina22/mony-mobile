@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 
 import { AuthService } from './auth.service';
 
@@ -21,6 +29,11 @@ export class AuthController {
   @Post('register')
   register(@Body() registerRequest: CreateUserDto) {
     return this.authService.register(registerRequest);
+  }
+
+  @Get('validateToken/:token')
+  validateToken(@Param('token') token: string) {
+    return this.authService.validateToken(token);
   }
 
   // example of how to use the jwt guard to protect a route

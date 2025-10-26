@@ -15,4 +15,12 @@ export class AuthService {
   }) {
     return await apiService.post(`${this.baseURL}/register`, registerRequest);
   }
+
+  static async validateToken(token: string): Promise<IUser> {
+    return await apiService.get(`${this.baseURL}/validate-token`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }

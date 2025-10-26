@@ -97,4 +97,9 @@ export class AuthService {
 
     return userData;
   }
+
+  async validateToken(token: string) {
+    const payload = this.jwtService.verify(token);
+    return payload;
+  }
 }

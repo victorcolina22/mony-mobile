@@ -12,7 +12,7 @@ services:
       - POSTGRES_PASSWORD=ofKGtWwgYcsLuGyKmsVJ
       - POSTGRES_DB=mony-db
     volumes:
-      - ./postgres:/var/lib/postgresql/data
+      - ./postgres:/var/lib/postgresql
 
   pdAdmin:
     image: dpage/pgadmin4

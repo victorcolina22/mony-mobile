@@ -20,7 +20,7 @@ import { AccountsModule } from './modules/accounts/accounts.module';
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
-      useFactory: async () => TypeOrmFactory(),
+      useFactory: () => TypeOrmFactory(),
     }),
     UsersModule,
     AuthModule,

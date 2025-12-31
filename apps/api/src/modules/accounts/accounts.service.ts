@@ -21,10 +21,10 @@ export class AccountsService {
     return this.accountsRepository.find();
   }
 
-  findOne(accountRequest: AccountRequest) {
+  async findOne(accountRequest: AccountRequest) {
     const { id } = accountRequest;
 
-    const account = this.accountsRepository.findOne({
+    const account = await this.accountsRepository.findOne({
       where: {
         id,
       },
@@ -35,10 +35,10 @@ export class AccountsService {
     return account;
   }
 
-  update(accountRequest: AccountRequest) {
+  async update(accountRequest: AccountRequest) {
     const { id } = accountRequest;
 
-    const account = this.accountsRepository.findOne({
+    const account = await this.accountsRepository.findOne({
       where: {
         id,
       },
@@ -51,9 +51,9 @@ export class AccountsService {
     );
   }
 
-  delete(accountRequest: AccountRequest) {
+  async delete(accountRequest: AccountRequest) {
     const { id } = accountRequest;
-    this.accountsRepository.delete({ id });
+    await this.accountsRepository.delete({ id });
     return `Account with id ${id} deleted`;
   }
 }

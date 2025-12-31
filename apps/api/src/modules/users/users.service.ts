@@ -48,8 +48,8 @@ export class UsersService {
       throw new NotFoundException(`User with id ${id} not found`);
     }
 
-    const userUpdated = this.usersRepository.update(id, updateUserDto);
-    if (!userUpdated) {
+    const userUpdated = await this.usersRepository.update(id, updateUserDto);
+    if (userUpdated.affected === 0) {
       throw new NotFoundException(`User with id ${id} not found`);
     }
     return userUpdated;
@@ -63,7 +63,7 @@ export class UsersService {
       throw new NotFoundException(`User with id ${id} not found`);
     }
 
-    this.usersRepository.delete(id);
+    await this.usersRepository.delete(id);
     return `User with id ${id} was deleted successfully`;
   }
 }

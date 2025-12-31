@@ -33,7 +33,8 @@ export class AuthService {
       throw new BadRequestException('Contraseña incorrecta');
     }
 
-    const { password: userPassword, ...userWithoutPassword } = user;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: _userPassword, ...userWithoutPassword } = user;
     return userWithoutPassword;
   }
 
@@ -63,12 +64,13 @@ export class AuthService {
       throw new BadRequestException('Este correo ya está registrado');
     }
 
-    registerDto.email = registerDto.email.toLowerCase();
-    registerDto.username = '';
+    const registerDtoCopy = structuredClone(registerDto);
+    registerDtoCopy.email = registerDto.email.toLowerCase();
+    registerDtoCopy.username = '';
 
     const registerUserData = {
-      ...registerDto,
-      password: await bcrypt.hash(registerDto.password, 10),
+      ...registerDtoCopy,
+      password: await bcrypt.hash(registerDtoCopy.password, 10),
     };
 
     const newUser = await this.usersService.create(registerUserData);
@@ -98,8 +100,9 @@ export class AuthService {
     return userData;
   }
 
-  async validateToken(token: string) {
-    const payload = this.jwtService.verify(token);
+  validateToken(token: string) {
+    const payload: { userId: string; email: string; name: string } =
+      this.jwtService.verify(token);
     return payload;
   }
 }

@@ -32,8 +32,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const validateToken = async () => {
       if (!user.access_token) return;
 
-      const validateToken = await AuthService.validateToken(user.access_token);
-      if (Object.keys(validateToken).length > 0) {
+      const tokenValidated = await AuthService.validateToken(user.access_token);
+      if (Object.keys(tokenValidated).length > 0) {
         router.replace('/(home)');
       } else {
         router.replace('/');

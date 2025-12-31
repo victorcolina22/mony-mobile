@@ -10,7 +10,7 @@ export function Avatar() {
     queryKey: ['user'],
     queryFn: () => UsersService.findOne(userId),
     retry: 2,
-    enabled: !!userId,
+    enabled: typeof userId !== 'undefined' && !!userId,
   });
 
   const firstLetterName = userData?.name?.split(' ')?.[0]?.split('')?.[0];

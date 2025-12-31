@@ -1,6 +1,5 @@
-import apiService from './api-service';
-
 import { IUser } from '@/shared/interfaces/user';
+import apiService from '../api-adapter';
 
 export class AuthService {
   private static readonly baseURL = `${process.env.EXPO_PUBLIC_BASE_URL}/auth`;
@@ -15,5 +14,13 @@ export class AuthService {
     password: string;
   }) {
     return await apiService.post(`${this.baseURL}/register`, registerRequest);
+  }
+
+  static async validateToken(token: string): Promise<IUser> {
+    return await apiService.get(`${this.baseURL}/validate-token`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 }

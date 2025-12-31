@@ -6,18 +6,18 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
-// DTOs
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
 
-// Services
+import { AccountsService } from '../accounts/accounts.service';
 import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly accountsService: AccountsService
   ) {}
 
   async validateUser(email: string, password: string) {
@@ -33,7 +33,8 @@ export class AuthService {
       throw new BadRequestException('Contraseña incorrecta');
     }
 
-    const { password: userPassword, ...userWithoutPassword } = user;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: _userPassword, ...userWithoutPassword } = user;
     return userWithoutPassword;
   }
 
@@ -63,14 +64,24 @@ export class AuthService {
       throw new BadRequestException('Este correo ya está registrado');
     }
 
-    registerDto.email = registerDto.email.toLowerCase();
+    const registerDtoCopy = structuredClone(registerDto);
+    registerDtoCopy.email = registerDto.email.toLowerCase();
+    registerDtoCopy.username = '';
 
     const registerUserData = {
-      ...registerDto,
-      password: await bcrypt.hash(registerDto.password, 10),
+      ...registerDtoCopy,
+      password: await bcrypt.hash(registerDtoCopy.password, 10),
     };
 
     const newUser = await this.usersService.create(registerUserData);
+
+    await this.accountsService.create({
+      user_id: newUser.id,
+      name: newUser.name,
+      type: 'cash',
+      currency: 'CLP',
+      balance: 0,
+    });
 
     const payload = {
       userId: newUser.id,
@@ -87,5 +98,11 @@ export class AuthService {
     };
 
     return userData;
+  }
+
+  validateToken(token: string) {
+    const payload: { userId: string; email: string; name: string } =
+      this.jwtService.verify(token);
+    return payload;
   }
 }

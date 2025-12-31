@@ -1,19 +1,20 @@
 import { useCallback, useState } from 'react';
 import { Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 
-// Components
 import { Form } from '@/components/Form';
 import { RenderIf } from '@/components/RenderIf';
 
-// Services
-import { AuthService } from '@/api/services/auth-service';
+import { AuthService } from '@/api/services/auth/auth-service';
 
-// Schema
 import { defaultValues, schema } from './schema';
+import { useAuthStore } from '@/store/useAuthStore';
 
 export function FormRegister() {
+  const { setUser } = useAuthStore();
+  const router = useRouter();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
     show: false,
@@ -28,7 +29,8 @@ export function FormRegister() {
   const register = useCallback(async (data: any) => {
     try {
       const response = await AuthService.register(data);
-      console.log(response);
+      setUser(response);
+      router.replace('/(home)');
     } catch (error: any) {
       setError({
         show: true,

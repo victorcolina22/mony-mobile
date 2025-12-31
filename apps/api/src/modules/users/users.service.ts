@@ -2,10 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-// Entities
 import { User } from './entities/user.entity';
 
-// DTOs
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -39,9 +37,6 @@ export class UsersService {
       select: ['id', 'name', 'email', 'password'],
       where: { email: email.toLowerCase() },
     });
-    if (!user) {
-      throw new NotFoundException(`User with email ${email} not found`);
-    }
     return user;
   }
 
@@ -53,8 +48,8 @@ export class UsersService {
       throw new NotFoundException(`User with id ${id} not found`);
     }
 
-    const userUpdated = this.usersRepository.update(id, updateUserDto);
-    if (!userUpdated) {
+    const userUpdated = await this.usersRepository.update(id, updateUserDto);
+    if (userUpdated.affected === 0) {
       throw new NotFoundException(`User with id ${id} not found`);
     }
     return userUpdated;
@@ -68,7 +63,7 @@ export class UsersService {
       throw new NotFoundException(`User with id ${id} not found`);
     }
 
-    this.usersRepository.delete(id);
+    await this.usersRepository.delete(id);
     return `User with id ${id} was deleted successfully`;
   }
 }

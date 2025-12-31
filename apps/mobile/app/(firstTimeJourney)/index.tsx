@@ -2,7 +2,6 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { Link } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-// Components
 import { Button } from '@/components/Button';
 
 export default function MainScreen() {
@@ -10,7 +9,9 @@ export default function MainScreen() {
 
   return (
     <View className="flex-1 items-center justify-center px-10">
-      <Text className="text-[48px] font-bold">¡Armemos tu presupuesto!</Text>
+      <Text className="text-[48px] text-center font-bold">
+        ¡Armemos tu presupuesto!
+      </Text>
 
       <Text className="text-base text-mony-gray mt-7">
          Hagamos un plan para que tus finanzas sean predecibles (y no un

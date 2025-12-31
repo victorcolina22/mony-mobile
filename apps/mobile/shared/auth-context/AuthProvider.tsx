@@ -8,7 +8,8 @@ import { AuthContext } from './auth-context';
 import { useAuthStore } from '@/store/useAuthStore';
 
 // Services
-import { axiosInstance } from '@/api/services/api-service';
+import { axiosInstance } from '@/api/services/api-adapter';
+import { AuthService } from '@/api/services/auth/auth-service';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -28,8 +29,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (user.access_token) return;
-    router.replace('/');
+    const validateToken = async () => {
+      if (!user.access_token) return;
+
+      const tokenValidated = await AuthService.validateToken(user.access_token);
+      if (Object.keys(tokenValidated).length > 0) {
+        router.replace('/(home)');
+      } else {
+        router.replace('/');
+      }
+    };
+    validateToken();
   }, [user]);
 
   return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;

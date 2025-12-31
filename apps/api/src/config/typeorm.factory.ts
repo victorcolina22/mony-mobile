@@ -1,6 +1,6 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-export const TypeOrmFactory = async (): Promise<TypeOrmModuleOptions> => {
+export const TypeOrmFactory = (): TypeOrmModuleOptions => {
   const dbConfig = {
     type: 'postgres',
     host: process.env.DB_HOST,
